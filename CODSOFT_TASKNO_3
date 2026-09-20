@@ -1,0 +1,311 @@
+custom.rules
+*************
+alert tcp $EXTERNAL_NET any -> $HOME_NET 80 (
+    msg:"CODE_SOFT Possible HTTP Path Traversal";
+    flow:to_server,established;
+    content:"../"; http_uri;
+    classtype:web-application-attack;
+    sid:1000001;
+    rev:1;
+)
+
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 80 (
+    msg:"CODE_SOFT Possible SQL Injection Pattern";
+    flow:to_server,established;
+    content:"union"; nocase; http_uri;
+    content:"select"; nocase; http_uri;
+    classtype:web-application-attack;
+    sid:1000002;
+    rev:1;
+)
+
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (
+    msg:"CODE_SOFT SSH Connection Attempt";
+    flow:to_server,established;
+    classtype:attempted-recon;
+    sid:1000003;
+    rev:1;
+)
+
+
+alert icmp $EXTERNAL_NET any -> $HOME_NET any (
+    msg:"CODE_SOFT ICMP Echo Request";
+    itype:8;
+    classtype:network-scan;
+    sid:1000004;
+    rev:1;
+)
+***********
+sample_alerts.log
+
+2026-09-20T10:00:01Z|1000003|CODE_SOFT SSH Connection Attempt|192.0.2.15|10.0.0.10
+2026-09-20T10:03:17Z|1000001|CODE_SOFT Possible HTTP Path Traversal|192.0.2.21|10.0.0.20
+2026-09-20T10:05:44Z|1000004|CODE_SOFT ICMP Echo Request|192.0.2.30|10.0.0.10
+2026-09-20T10:06:12Z|1000002|CODE_SOFT Possible SQL Injection Pattern|192.0.2.25|10.0.0.20
+2026-09-20T10:09:03Z|1000003|CODE_SOFT SSH Connection Attempt|192.0.2.18|10.0.0.10
+
+----------------
+
+dashboard.py
+---------
+from collections import Counter
+from pathlib import Path
+
+from flask import Flask, render_template_string
+
+
+app = Flask(__name__)
+
+LOG_FILE = Path(__file__).with_name("sample_alerts.log")
+
+
+HTML = """
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>IDS Alert Dashboard</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+h1 {
+    color: #123c69;
+    margin-bottom: 30px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    color: #1769aa;
+    font-size: 32px;
+}
+
+table {
+    width: 100%;
+    margin-top: 30px;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th {
+    background: #123c69;
+    color: white;
+}
+
+th,
+td {
+    padding: 14px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+tr:hover {
+    background: #f1f5f9;
+}
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 15px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h1>Network Intrusion Detection Dashboard</h1>
+
+
+<div class="cards">
+
+<div class="card">
+
+<p>Total Alerts</p>
+
+<h2>{{ total }}</h2>
+
+</div>
+
+
+<div class="card">
+
+<p>Unique Signatures</p>
+
+<h2>{{ signatures }}</h2>
+
+</div>
+
+
+<div class="card">
+
+<p>Source IP Addresses</p>
+
+<h2>{{ sources }}</h2>
+
+</div>
+
+</div>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Time</th>
+
+<th>SID</th>
+
+<th>Alert</th>
+
+<th>Source IP</th>
+
+<th>Destination IP</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+{% for row in rows %}
+
+<tr>
+
+<td>{{ row[0] }}</td>
+
+<td>{{ row[1] }}</td>
+
+<td>{{ row[2] }}</td>
+
+<td>{{ row[3] }}</td>
+
+<td>{{ row[4] }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</body>
+
+</html>
+"""
+
+
+def load_alerts():
+
+    alerts = []
+
+    if not LOG_FILE.exists():
+        return alerts
+
+    lines = LOG_FILE.read_text(
+        encoding="utf-8"
+    ).splitlines()
+
+    for line in lines:
+
+        parts = line.split("|")
+
+        if len(parts) == 5:
+            alerts.append(parts)
+
+    return alerts
+
+
+@app.route("/")
+def dashboard():
+
+    alerts = load_alerts()
+
+    signatures = Counter(
+        alert[1]
+        for alert in alerts
+    )
+
+    sources = Counter(
+        alert[3]
+        for alert in alerts
+    )
+
+    return render_template_string(
+
+        HTML,
+
+        rows=alerts,
+
+        total=len(alerts),
+
+        signatures=len(signatures),
+
+        sources=len(sources)
+
+    )
+
+
+if __name__ == "__main__":
+
+    app.run(
+        host="127.0.0.1",
+        port=5050,
+        debug=False
+    )
