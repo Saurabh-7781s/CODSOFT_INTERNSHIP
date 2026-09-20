@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phishing Awareness Training</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+<div class="container">
+<p class="eyebrow">CodeSoft Internship • Task 2</p>
+<h1>Phishing Awareness Program</h1>
+<p>Learn how to recognize suspicious messages, fake login pages, fraudulent websites and social-engineering attempts.</p>
+<a class="button" href="#quiz">Take the quiz</a>
+</div>
+</header>
+
+<main class="container">
+<section>
+<h2>1. What is phishing?</h2>
+<p>Phishing is a social-engineering technique in which an attacker impersonates a trusted person or organization to trick a user into revealing information, opening a malicious attachment, transferring money or visiting a harmful website.</p>
+</section>
+
+<section class="grid">
+<article class="card"><h3>Suspicious email signs</h3><ul>
+<li>Unexpected urgency or threats.</li>
+<li>Sender address does not match the claimed organization.</li>
+<li>Unexpected attachments or links.</li>
+<li>Requests for passwords, OTPs or payment details.</li>
+<li>Spelling, branding or formatting inconsistencies.</li>
+</ul></article>
+
+<article class="card"><h3>Fake login page signs</h3><ul>
+<li>Check the complete domain name.</li>
+<li>HTTPS alone does not prove legitimacy.</li>
+<li>Unexpected login prompts reached through email links.</li>
+<li>Browser warnings or unusual redirects.</li>
+<li>Requests for information the service normally does not ask for.</li>
+</ul></article>
+
+<article class="card"><h3>Fraudulent website signs</h3><ul>
+<li>Look-alike domains or unusual spelling.</li>
+<li>Fake countdowns and excessive urgency.</li>
+<li>Unusual payment instructions.</li>
+<li>Missing contact/privacy information.</li>
+<li>Promises that are too good to be true.</li>
+</ul></article>
+</section>
+
+<section>
+<h2>2. Common social-engineering techniques</h2>
+<div class="techniques">
+<div><strong>Pretexting</strong><p>An attacker invents a believable situation to obtain information.</p></div>
+<div><strong>Impersonation</strong><p>The attacker pretends to be a colleague, bank, delivery service or administrator.</p></div>
+<div><strong>Urgency</strong><p>The victim is pressured to act before verifying the request.</p></div>
+<div><strong>Quid pro quo</strong><p>The attacker offers a benefit or service in exchange for information or an action.</p></div>
+<div><strong>Baiting</strong><p>A tempting file, offer or device is used to encourage unsafe behavior.</p></div>
+<div><strong>Smishing / Vishing</strong><p>Phishing delivered through SMS or voice calls.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. Practical security checklist</h2>
+<ol class="checklist">
+<li>Pause when a message creates unusual urgency.</li>
+<li>Verify the sender using a trusted channel.</li>
+<li>Never share passwords, PINs or OTPs.</li>
+<li>Navigate to important services using a known bookmark or manually typed address.</li>
+<li>Use multi-factor authentication.</li>
+<li>Keep browsers, operating systems and security software updated.</li>
+<li>Report suspicious messages to the appropriate IT/security team.</li>
+</ol>
+</section>
+
+<section>
+<h2>4. Case studies</h2>
+<div class="case"><h3>Case A – Account verification email</h3>
+<p>You receive an email saying your account will be locked in 30 minutes unless you verify your password through a link.</p>
+<p><strong>Correct response:</strong> Do not use the email link. Open the official service through a known address/bookmark and check independently.</p></div>
+<div class="case"><h3>Case B – Fake delivery message</h3>
+<p>An SMS claims that a parcel cannot be delivered and asks for a small payment through a link.</p>
+<p><strong>Correct response:</strong> Verify the shipment through the courier's official app/site rather than the SMS link.</p></div>
+</section>
+
+<section id="quiz">
+<h2>5. Short quiz</h2>
+<div class="question" data-answer="b"><p><strong>Q1.</strong> Safest response to an unexpected password-reset email?</p>
+<label><input type="radio" name="q1" value="a"> Click the link immediately.</label>
+<label><input type="radio" name="q1" value="b"> Open the service using a trusted address and check independently.</label>
+<label><input type="radio" name="q1" value="c"> Reply with the password.</label></div>
+
+<div class="question" data-answer="c"><p><strong>Q2.</strong> Which statement is correct?</p>
+<label><input type="radio" name="q2" value="a"> HTTPS always means the website is legitimate.</label>
+<label><input type="radio" name="q2" value="b"> OTPs can safely be shared with support staff.</label>
+<label><input type="radio" name="q2" value="c"> The domain name should be checked carefully.</label></div>
+
+<div class="question" data-answer="a"><p><strong>Q3.</strong> Smishing is phishing delivered primarily through:</p>
+<label><input type="radio" name="q3" value="a"> SMS/text messages</label>
+<label><input type="radio" name="q3" value="b"> Printed documents</label>
+<label><input type="radio" name="q3" value="c"> USB keyboards</label></div>
+
+<button class="button" onclick="gradeQuiz()">Submit quiz</button>
+<div id="quizResult" class="result"></div>
+</section>
+</main>
+
+<footer><p>Educational cybersecurity material • Authorized training use.</p></footer>
+<script src="script.js"></script>
+</body>
+</html>
