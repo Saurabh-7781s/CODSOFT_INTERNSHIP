@@ -1,1 +1,180 @@
+from flask import Flask, request, render_template
+from markupsafe import escape
 
+app = Flask(__name__)
+
+
+@app.route("/", methods=["GET"])
+def home():
+    return render_template("index.html")
+
+
+@app.route("/greet", methods=["POST"])
+def greet():
+
+    name = request.form.get("name", "").strip()
+
+    # Server-side validation
+    if not name:
+        return render_template(
+            "index.html",
+            error="Please enter your name."
+        ), 400
+
+    # Limit input length
+    if len(name) > 80:
+        return render_template(
+            "index.html",
+            error="Name must be 80 characters or less."
+        ), 400
+
+    # Safely escape user-controlled input
+    safe_name = escape(name)
+
+    return render_template(
+        "index.html",
+        message=f"Hello, {safe_name}!"
+    )
+
+
+if __name__ == "__main__":
+    # Debug mode disabled for safer configuration
+    app.run(
+        host="127.0.0.1",
+        port=5000,
+        debug=False
+    )
+requirements.txt
+Flask>=3.0,<4.0
+
+--------
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Secure Code Assessment</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 80px auto;
+            padding: 35px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #00000015;
+        }
+
+        h1 {
+            color: #123c69;
+        }
+
+        input {
+            width: 70%;
+            padding: 12px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            background: #123c69;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0b2d4d;
+        }
+
+        .error {
+            color: #b00020;
+            font-weight: bold;
+        }
+
+        .success {
+            color: #087f23;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Secure Code Assessment</h1>
+
+    <p>
+        This Flask application demonstrates basic secure coding
+        practices such as server-side input validation and
+        safe output handling.
+    </p>
+
+
+    <form action="/greet" method="POST">
+
+        <label for="name">
+            Enter your name:
+        </label>
+
+        <br><br>
+
+        <input
+            type="text"
+            id="name"
+            name="name"
+            maxlength="80"
+            required
+        >
+
+        <button type="submit">
+            Submit
+        </button>
+
+    </form>
+
+
+    {% if error %}
+
+        <p class="error">
+            {{ error }}
+        </p>
+
+    {% endif %}
+
+
+    {% if message %}
+
+        <p class="success">
+            {{ message }}
+        </p>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>
