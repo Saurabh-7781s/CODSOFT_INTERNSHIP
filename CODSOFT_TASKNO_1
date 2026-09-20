@@ -1,1 +1,311 @@
+INDEX.html file
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Phishing Awareness Program</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<header>
+    <h1>Phishing Awareness Program</h1>
+    <p>CodeSoft Cybersecurity Internship – Task 2</p>
+</header>
+
+<main>
+
+<section>
+<h2>What is Phishing?</h2>
+<p>
+Phishing is a social engineering attack where criminals pretend to be
+trusted organizations or individuals to steal information, money,
+passwords or account credentials.
+</p>
+</section>
+
+<section>
+<h2>How to Identify Phishing</h2>
+
+<div class="cards">
+
+<div>
+<h3>📧 Suspicious Emails</h3>
+<ul>
+<li>Unknown sender</li>
+<li>Urgent threats</li>
+<li>Suspicious links</li>
+<li>Unexpected attachments</li>
+<li>Requests for passwords or OTPs</li>
+<li>Spelling mistakes</li>
+</ul>
+</div>
+
+<div>
+<h3>🔐 Fake Login Pages</h3>
+<ul>
+<li>Unusual domain name</li>
+<li>Unexpected login request</li>
+<li>Suspicious redirects</li>
+<li>Browser warnings</li>
+<li>Requests for unnecessary information</li>
+</ul>
+</div>
+
+<div>
+<h3>🌐 Fraudulent Websites</h3>
+<ul>
+<li>Look-alike domains</li>
+<li>Fake offers</li>
+<li>Unusual payment requests</li>
+<li>Fake countdowns</li>
+<li>Missing contact information</li>
+</ul>
+</div>
+
+</div>
+</section>
+
+<section>
+<h2>Common Social Engineering Techniques</h2>
+
+<div class="cards">
+
+<div><h3>Pretexting</h3>
+<p>Creating a believable story to obtain information.</p></div>
+
+<div><h3>Impersonation</h3>
+<p>Pretending to be a trusted person or organization.</p></div>
+
+<div><h3>Urgency</h3>
+<p>Creating pressure so the victim acts without verification.</p></div>
+
+<div><h3>Baiting</h3>
+<p>Using attractive offers or files to trick users.</p></div>
+
+<div><h3>Smishing</h3>
+<p>Phishing through SMS or text messages.</p></div>
+
+<div><h3>Vishing</h3>
+<p>Phishing through voice calls.</p></div>
+
+</div>
+</section>
+
+<section>
+<h2>Security Tips</h2>
+
+<ol>
+<li>Think before clicking unexpected links.</li>
+<li>Verify the sender through another trusted method.</li>
+<li>Never share passwords, PINs or OTPs.</li>
+<li>Check the complete website domain.</li>
+<li>Use Multi-Factor Authentication.</li>
+<li>Keep software and browsers updated.</li>
+<li>Report suspicious messages.</li>
+</ol>
+
+</section>
+
+<section>
+<h2>Case Studies</h2>
+
+<div class="case">
+<h3>Case 1 – Account Verification</h3>
+<p>
+An email says your account will be locked in 30 minutes unless you
+verify your password using a link.
+</p>
+<strong>Correct Action:</strong>
+<p>
+Do not click the link. Open the official website manually and check
+your account.
+</p>
+</div>
+
+<div class="case">
+<h3>Case 2 – Fake Delivery SMS</h3>
+<p>
+An SMS claims that your parcel cannot be delivered and asks for a
+small payment through a link.
+</p>
+<strong>Correct Action:</strong>
+<p>
+Check the delivery through the official courier website or application.
+</p>
+</div>
+
+</section>
+
+<section id="quiz">
+<h2>Phishing Awareness Quiz</h2>
+
+<div class="question">
+<p><b>1. What should you do with an unexpected password-reset email?</b></p>
+
+<label><input type="radio" name="q1" value="a"> Click the link</label>
+<label><input type="radio" name="q1" value="b"> Open the official website manually</label>
+<label><input type="radio" name="q1" value="c"> Reply with your password</label>
+</div>
+
+<div class="question">
+<p><b>2. Which is correct?</b></p>
+
+<label><input type="radio" name="q2" value="a"> HTTPS always means the website is genuine</label>
+<label><input type="radio" name="q2" value="b"> OTPs can be shared with support staff</label>
+<label><input type="radio" name="q2" value="c"> Check the complete domain name</label>
+</div>
+
+<div class="question">
+<p><b>3. Smishing uses:</b></p>
+
+<label><input type="radio" name="q3" value="a"> SMS messages</label>
+<label><input type="radio" name="q3" value="b"> Printed documents</label>
+<label><input type="radio" name="q3" value="c"> Keyboard devices</label>
+</div>
+
+<button onclick="checkQuiz()">Submit Quiz</button>
+
+<p id="result"></p>
+
+</section>
+
+</main>
+
+<footer>
+CodeSoft Cybersecurity Internship – Task 2
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+---------
+style.css
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+    line-height: 1.6;
+}
+
+header {
+    background: linear-gradient(135deg, #073b7a, #1769aa);
+    color: white;
+    text-align: center;
+    padding: 55px 20px;
+}
+
+header h1 {
+    font-size: 42px;
+    margin: 10px;
+}
+
+main {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+section {
+    margin: 40px 0;
+}
+
+h2 {
+    color: #073b7a;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.cards > div,
+.case,
+.question {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px #00000012;
+}
+
+.cards h3 {
+    color: #1769aa;
+}
+
+li {
+    margin: 8px 0;
+}
+
+.case {
+    margin: 18px 0;
+    border-left: 5px solid #1769aa;
+}
+
+.question {
+    margin: 20px 0;
+}
+
+.question label {
+    display: block;
+    margin: 10px 0;
+}
+
+button {
+    background: #1769aa;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #073b7a;
+}
+
+#result {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+footer {
+    background: #172033;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 50px;
+}
+------------
+script.js
+
+function checkQuiz() {
+
+    let q1 = document.querySelector('input[name="q1"]:checked');
+    let q2 = document.querySelector('input[name="q2"]:checked');
+    let q3 = document.querySelector('input[name="q3"]:checked');
+
+    if (!q1 || !q2 || !q3) {
+        document.getElementById("result").innerText =
+            "Please answer all questions.";
+        return;
+    }
+
+    let score = 0;
+
+    if (q1.value === "b") score++;
+    if (q2.value === "c") score++;
+    if (q3.value === "a") score++;
+
+    document.getElementById("result").innerText =
+        "Your Score: " + score + "/3";
+}
